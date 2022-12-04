@@ -1,0 +1,63 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+cd "$SCRIPTPATH"
+
+echo "cp -h"
+../bin/cp.js -h
+if [ "$?" != "0" ]; then exit 1; fi
+
+echo "cp -V"
+../bin/cp.js -V
+if [ "$?" != "0" ]; then exit 1; fi
+
+rm -rf out
+mkdir out
+
+echo "cp run out"
+../bin/cp.js run out
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -f "out/run" ]; then exit 1; fi
+
+echo "cp -- run out/run2"
+../bin/cp.js run out/run2
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -f "out/run2" ]; then exit 1; fi
+
+echo "cp run -n out/run2"
+../bin/cp.js -n run out/run2
+if [ "$?" != "1" ]; then exit 1; fi
+
+chmod a-w out/run2
+
+echo "cp run out/run2"
+../bin/cp.js run out/run2
+if [ "$?" != "1" ]; then exit 1; fi
+
+echo "cp -f run out/run2"
+../bin/cp.js -f run out/run2
+if [ "$?" != "0" ]; then exit 1; fi
+
+echo "cp run out/run3"
+../bin/cp.js -D run out/run3
+if [ "$?" != "0" ]; then exit 1; fi
+if [ -f "out/run3" ]; then exit 1; fi
+
+echo "cp -Rv ../bin out"
+../bin/cp.js -Rv ../bin out
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -d "out/bin" ]; then exit 1; fi
+
+echo "cp -HpR ../bin out/bin2"
+../bin/cp.js -HpR ../bin out/bin2
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -d "out/bin2" ]; then exit 1; fi
+
+echo "cp -v out/run* out/bin"
+../bin/cp.js -v out/run* out/bin
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -f "out/bin/run" ] || [ ! -f "out/bin/run2" ]; then exit 1; fi
+
+echo "done"
