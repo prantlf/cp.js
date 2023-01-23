@@ -8,7 +8,7 @@ Copies files or directories like the `cp` command.
 
 There are multi-platform file-system commands compatible with `cp` from UN*X implemented for Node.js in JavaScript, like [ncp], [cpy-cli], [cpx] or [copyfiles], but they have different interface and different behaviour than the `cp` command. Instead of reusing the knowledge of the `cp` command, you would have to learn their new interface. This project aims to provide the well-known interface of the `cp` command.
 
-See also other commands compatible with their counterparts from UN*X - [mkdir.js] and [rm.js].
+See also other commands compatible with their counterparts from UN*X - [cat.js], [mkdir.js] and [rm.js].
 
 ## Installation
 
@@ -47,7 +47,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## License
 
-Copyright (c) 2022 Ferdinand Prantl
+Copyright (c) 2022-2023 Ferdinand Prantl
 
 Licensed under the MIT license.
 
@@ -61,3 +61,4 @@ Licensed under the MIT license.
 [copyfiles]: https://www.npmjs.com/package/copyfiles
 [mkdir.js]: https://www.npmjs.com/package/@unixcompat/mkdir.js
 [rm.js]: https://www.npmjs.com/package/@unixcompat/rm.js
+[cat.js]: https://www.npmjs.com/package/@unixcompat/cat.js
