@@ -4,9 +4,11 @@
     ".git": true,
     "node_modules": true,
     "pnpm-lock.yaml": true,
-    ".DS_Store": true
+    ".DS_Store": true,
+    "coverage": true
   },
   "search.exclude": {
+    "test/in": true,
     "test/out": true
   }
 }

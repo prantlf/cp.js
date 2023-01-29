@@ -23,8 +23,9 @@
     }
   ],
   "engines": {
-    "node": ">=14.8"
+    "node": ">=16.15"
   },
+  "type": "module",
   "bin": {
     "cp.js": "bin/cp.js"
   },
@@ -34,7 +35,18 @@
   "scripts": {
     "lint": "denolint",
     "check": "test/run",
-    "test": "denolint && test/run"
+    "test": "denolint && c8 test/run"
+  },
+  "c8": {
+    "check-coverage": true,
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "branches": 100,
+    "lines": 100,
+    "functions": 100,
+    "statements": 100
   },
   "release": {
     "plugins": [
@@ -55,9 +67,10 @@
     "fast-glob": "3.2.12"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/changelog": "6.0.2",
     "@semantic-release/git": "10.0.1",
-    "denolint": "2.0.5"
+    "c8": "7.12.0",
+    "denolint": "2.0.6"
   },
   "keywords": [
     "fs",
