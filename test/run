@@ -13,51 +13,249 @@ echo "cp -V"
 ../bin/cp.js -V
 if [ "$?" != "0" ]; then exit 1; fi
 
-rm -rf out
+echo "cp"
+../bin/cp.js
+if [ "$?" != "1" ]; then exit 1; fi
+
+echo "cp -z"
+../bin/cp.js -z
+if [ "$?" != "1" ]; then exit 1; fi
+
+rm -rf in out
+mkdir in
+mkdir in/dir
+touch -d 2022-12-24T19:30:45 in/file
+ln -s "$PWD/in/file" in/link
+mkdir in/dir/subdir
+touch in/dir/subfile
+ln -s "$PWD/in/dir/subdir" in/dir/sublink
+touch in/dir/subdir/subsubfile
+
+echo "cp -- in/file out"
+../bin/cp.js -- in/file out
+if [ "$?" != "0" ]; then exit 1; fi
+if [ ! -f "out" ]; then exit 1; fi
+
+echo "cp -n in/file out"
+../bin/cp.js -n in/file out
+if [ "$?" != "1" ]; then exit 1; fi
+
+chmod a-w out
+
+echo "cp in/file out"
+../bin/cp.js in/file out
+if [ "$?" != "1" ]; then exit 1; fi
+
+echo "cp --clobbering in/file out"
+../bin/cp.js --clobbering in/file out
+if [ "$?" != "1" ]; then exit 1; fi
+
+echo "cp -fv in/file out"
+../bin/cp.js -fv in/file out
+if [ "$?" != "0" ]; then exit 1; fi
+
+chmod u+w out
+rm out
 mkdir out
 
-echo "cp run out"
-../bin/cp.js run out
+echo "cp -D in/file out"
+../bin/cp.js -D in/file out
 if [ "$?" != "0" ]; then exit 1; fi
-if [ ! -f "out/run" ]; then exit 1; fi
+if [ -f "out/file" ]; then exit 1; fi
 
-echo "cp -- run out/run2"
-../bin/cp.js run out/run2
+echo "cp in/file out"
+../bin/cp.js in/file out
 if [ "$?" != "0" ]; then exit 1; fi
-if [ ! -f "out/run2" ]; then exit 1; fi
+if [ ! -f "out/file" ]; then exit 1; fi
 
-echo "cp run -n out/run2"
-../bin/cp.js -n run out/run2
-if [ "$?" != "1" ]; then exit 1; fi
+rm -r out
 
-chmod a-w out/run2
-
-echo "cp run out/run2"
-../bin/cp.js run out/run2
-if [ "$?" != "1" ]; then exit 1; fi
-
-echo "cp -f run out/run2"
-../bin/cp.js -f run out/run2
+echo "cp -R in out"
+../bin/cp.js -R in out
 if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/dir"
+if [ ! -d "out/dir" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "checking out/link"
+if [ ! -L "out/link" ]; then exit 1; fi
+echo "checking out/link target"
+if [ ! -e "out/link" ]; then exit 1; fi
+echo "checking out/dir/subdir"
+if [ ! -d "out/dir/subdir" ]; then exit 1; fi
+echo "checking out/dir/subfile"
+if [ ! -f "out/dir/subfile" ]; then exit 1; fi
+echo "checking out/dir/sublink"
+if [ ! -L "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/sublink target"
+if [ ! -e "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/subdir/subsubfile"
+if [ ! -f "out/dir/subdir/subsubfile" ]; then exit 1; fi
+echo "checking out/dir/sublink/subsubfile"
+if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
 
-echo "cp run out/run3"
-../bin/cp.js -D run out/run3
-if [ "$?" != "0" ]; then exit 1; fi
-if [ -f "out/run3" ]; then exit 1; fi
+rm -r out/*
 
-echo "cp -Rv ../bin out"
-../bin/cp.js -Rv ../bin out
+echo "cp -Rd in/dir in/file in/link out"
+../bin/cp.js -Rd in/dir in/file in/link out
 if [ "$?" != "0" ]; then exit 1; fi
-if [ ! -d "out/bin" ]; then exit 1; fi
+echo "checking out/dir"
+if [ ! -d "out/dir" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "checking out/link"
+if [ ! -L "out/link" ]; then exit 1; fi
+echo "checking out/link target"
+if [ ! -e "out/link" ]; then exit 1; fi
+echo "checking out/dir/subdir"
+if [ ! -d "out/dir/subdir" ]; then exit 1; fi
+echo "checking out/dir/subfile"
+if [ ! -f "out/dir/subfile" ]; then exit 1; fi
+echo "checking out/dir/sublink"
+if [ ! -L "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/sublink target"
+if [ ! -e "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/subdir/subsubfile"
+if [ ! -f "out/dir/subdir/subsubfile" ]; then exit 1; fi
+echo "checking out/dir/sublink/subsubfile"
+if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
 
-echo "cp -HpR ../bin out/bin2"
-../bin/cp.js -HpR ../bin out/bin2
-if [ "$?" != "0" ]; then exit 1; fi
-if [ ! -d "out/bin2" ]; then exit 1; fi
+rm -r out/*
 
-echo "cp -v out/run* out/bin"
-../bin/cp.js -v out/run* out/bin
+echo "cp -RL in out"
+../bin/cp.js -RL in out
 if [ "$?" != "0" ]; then exit 1; fi
-if [ ! -f "out/bin/run" ] || [ ! -f "out/bin/run2" ]; then exit 1; fi
+echo "checking out/in/dir"
+if [ ! -d "out/in/dir" ]; then exit 1; fi
+echo "checking out/in/file"
+if [ ! -f "out/in/file" ]; then exit 1; fi
+echo "checking out/link"
+if [ -L "out/link" ]; then exit 1; fi
+echo "checking out/in/link file"
+if [ ! -f "out/in/link" ]; then exit 1; fi
+echo "checking out/in/dir/subdir"
+if [ ! -d "out/in/dir/subdir" ]; then exit 1; fi
+echo "checking out/in/dir/subfile"
+if [ ! -f "out/in/dir/subfile" ]; then exit 1; fi
+echo "checking out/dir/sublink"
+if [ -L "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/in/dir/sublink directory"
+if [ ! -d "out/in/dir/sublink" ]; then exit 1; fi
+echo "checking out/in/dir/subdir/subsubfile"
+if [ ! -f "out/in/dir/subdir/subsubfile" ]; then exit 1; fi
+echo "checking out/in/dir/sublink/subsubfile"
+if [ ! -f "out/in/dir/sublink/subsubfile" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -R in/file in/link out"
+../bin/cp.js -R in/file in/link in/dir out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "checking out/link"
+if [ ! -L "out/link" ]; then exit 1; fi
+echo "checking out/link target"
+if [ ! -e "out/link" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -RH in/dir in/file in/link out"
+../bin/cp.js -RH in/file in/link in/dir out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/dir"
+if [ ! -d "out/dir" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "checking out/link"
+if [ -L "out/link" ]; then exit 1; fi
+echo "checking out/link file"
+if [ ! -f "out/link" ]; then exit 1; fi
+echo "checking out/dir/subdir"
+if [ ! -d "out/dir/subdir" ]; then exit 1; fi
+echo "checking out/dir/subfile"
+if [ ! -f "out/dir/subfile" ]; then exit 1; fi
+echo "checking out/dir/sublink"
+if [ ! -L "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/sublink target"
+if [ ! -e "out/dir/sublink" ]; then exit 1; fi
+echo "checking out/dir/subdir/subsubfile"
+if [ ! -f "out/dir/subdir/subsubfile" ]; then exit 1; fi
+echo "checking out/dir/sublink/subsubfile"
+if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -RL in/file in/link out"
+../bin/cp.js -RL in/file in/link in/dir out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "getting date"
+date=`date -r out/file +%F`
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking date"
+if [ "$date" = "2022-12-24" ]; then exit 1; fi
+echo "checking out/link"
+if [ -L "out/link" ]; then exit 1; fi
+echo "checking out/link file"
+if [ ! -f "out/link" ]; then exit 1; fi
+
+rm -r out
+
+echo "cp -R in/dir/ out"
+../bin/cp.js -R in/dir/ out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/subdir"
+if [ ! -d "out/subdir" ]; then exit 1; fi
+echo "checking out/subfile"
+if [ ! -f "out/subfile" ]; then exit 1; fi
+echo "checking out/sublink"
+if [ ! -L "out/sublink" ]; then exit 1; fi
+echo "checking out/sublink target"
+if [ ! -e "out/sublink" ]; then exit 1; fi
+echo "checking out/subdir/subsubfile"
+if [ ! -f "out/subdir/subsubfile" ]; then exit 1; fi
+echo "checking out/sublink/subsubfile"
+if [ ! -f "out/sublink/subsubfile" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -p in/file out"
+../bin/cp.js -p in/file out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/file"
+if [ ! -f "out/file" ]; then exit 1; fi
+echo "getting date"
+date=`date -r out/file +%F`
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking date"
+if [ "$date" != "2022-12-24" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -r -c in/dir '**/*' out"
+../bin/cp.js -r -c in/dir '**/*' out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/subdir"
+if [ ! -d "out/subdir" ]; then exit 1; fi
+echo "checking out/subfile"
+if [ ! -f "out/subfile" ]; then exit 1; fi
+echo "checking out/sublink"
+if [ ! -L "out/sublink" ]; then exit 1; fi
+
+rm -r out/*
+
+echo "cp -rLv -c in/dir '**/*' out"
+../bin/cp.js -rLv -c in/dir '**/*' out
+if [ "$?" != "0" ]; then exit 1; fi
+echo "checking out/subdir"
+if [ ! -d "out/subdir" ]; then exit 1; fi
+echo "checking out/subfile"
+if [ ! -f "out/subfile" ]; then exit 1; fi
+echo "checking out/sublink"
+if [ -L "out/sublink" ]; then exit 1; fi
+echo "checking out/sublink directory"
+if [ ! -d "out/sublink" ]; then exit 1; fi
 
 echo "done"
