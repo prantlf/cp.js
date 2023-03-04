@@ -9,7 +9,7 @@ Copies files or directories like the `cp` command.
 
 There are multi-platform file-system commands compatible with `cp` from UN*X implemented for Node.js in JavaScript, like [ncp], [cpy-cli], [cpx] or [copyfiles], but they have different interface and different behaviour than the `cp` command. Instead of reusing the knowledge of the `cp` command, you would have to learn their new interface. This project aims to provide the well-known interface of the `cp` command.
 
-This package offers only command-line interface, because programmatic interface is provided by [`cp`] and [`copyFile`] from [node:fs]. See also other commands compatible with their counterparts from UN*X - [cat.js], [mkdir.js] and [rm.js].
+This package offers only command-line interface, because programmatic interface is provided by [`cp`] and [`copyFile`] from [node:fs]. See also other commands compatible with their counterparts from UN*X - [cat.js], [mkdir.js], [mv.js] and [rm.js].
 
 ## Synopsis
 
@@ -19,6 +19,7 @@ The following scripts from `package.json` won't work on Windows:
     mkdir -p dist
     cat src/umd-prolog.txt src/code.js src/umd-epilog.txt > dist/index.umd.js
     cp src/index.d.ts dist
+    mv LICENSE doc
 
 Replace them with the following ones, which run on any operating system which is supported by Node.js:
 
@@ -26,6 +27,7 @@ Replace them with the following ones, which run on any operating system which is
     mkdir.js -p dist
     cat.js src/umd-prolog.txt src/code.js src/umd-epilog.txt > dist/index.umd.js
     cp.js src/index.d.ts dist
+    mv.js LICENSE doc
 
 Notice that the only difference is the suffix `.js` behind the command names.
 
@@ -146,6 +148,7 @@ Licensed under the MIT license.
 [cpx]: https://www.npmjs.com/package/cpx
 [copyfiles]: https://www.npmjs.com/package/copyfiles
 [mkdir.js]: https://www.npmjs.com/package/@unixcompat/mkdir.js
+[mv.js]: https://www.npmjs.com/package/@unixcompat/mv.js
 [rm.js]: https://www.npmjs.com/package/@unixcompat/rm.js
 [cat.js]: https://www.npmjs.com/package/@unixcompat/cat.js
 [POSIX documentation]: https://man7.org/linux/man-pages/man1/cp.1p.html
