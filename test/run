@@ -6,19 +6,19 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
 echo "cp -h"
-../bin/cp.js -h
+../bin/cp.mjs -h
 if [ "$?" != "0" ]; then exit 1; fi
 
 echo "cp -V"
-../bin/cp.js -V
+../bin/cp.mjs -V
 if [ "$?" != "0" ]; then exit 1; fi
 
 echo "cp"
-../bin/cp.js
+../bin/cp.mjs
 if [ "$?" != "1" ]; then exit 1; fi
 
 echo "cp -z"
-../bin/cp.js -z
+../bin/cp.mjs -z
 if [ "$?" != "1" ]; then exit 1; fi
 
 rm -rf in out
@@ -32,26 +32,26 @@ ln -s "$PWD/in/dir/subdir" in/dir/sublink
 touch in/dir/subdir/subsubfile
 
 echo "cp -- in/file out"
-../bin/cp.js -- in/file out
+../bin/cp.mjs -- in/file out
 if [ "$?" != "0" ]; then exit 1; fi
 if [ ! -f "out" ]; then exit 1; fi
 
 echo "cp -n in/file out"
-../bin/cp.js -n in/file out
+../bin/cp.mjs -n in/file out
 if [ "$?" != "1" ]; then exit 1; fi
 
 chmod a-w out
 
 echo "cp in/file out"
-../bin/cp.js in/file out
+../bin/cp.mjs in/file out
 if [ "$?" != "1" ]; then exit 1; fi
 
 echo "cp --clobbering in/file out"
-../bin/cp.js --clobbering in/file out
+../bin/cp.mjs --clobbering in/file out
 if [ "$?" != "1" ]; then exit 1; fi
 
 echo "cp -fv in/file out"
-../bin/cp.js -fv in/file out
+../bin/cp.mjs -fv in/file out
 if [ "$?" != "0" ]; then exit 1; fi
 
 chmod u+w out
@@ -59,19 +59,19 @@ rm out
 mkdir out
 
 echo "cp -D in/file out"
-../bin/cp.js -D in/file out
+../bin/cp.mjs -D in/file out
 if [ "$?" != "0" ]; then exit 1; fi
 if [ -f "out/file" ]; then exit 1; fi
 
 echo "cp in/file out"
-../bin/cp.js in/file out
+../bin/cp.mjs in/file out
 if [ "$?" != "0" ]; then exit 1; fi
 if [ ! -f "out/file" ]; then exit 1; fi
 
 rm -r out
 
 echo "cp -R in out"
-../bin/cp.js -R in out
+../bin/cp.mjs -R in out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/dir"
 if [ ! -d "out/dir" ]; then exit 1; fi
@@ -97,7 +97,7 @@ if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -Rd in/dir in/file in/link out"
-../bin/cp.js -Rd in/dir in/file in/link out
+../bin/cp.mjs -Rd in/dir in/file in/link out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/dir"
 if [ ! -d "out/dir" ]; then exit 1; fi
@@ -123,7 +123,7 @@ if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -RL in out"
-../bin/cp.js -RL in out
+../bin/cp.mjs -RL in out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/in/dir"
 if [ ! -d "out/in/dir" ]; then exit 1; fi
@@ -149,7 +149,7 @@ if [ ! -f "out/in/dir/sublink/subsubfile" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -R in/file in/link out"
-../bin/cp.js -R in/file in/link in/dir out
+../bin/cp.mjs -R in/file in/link in/dir out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/file"
 if [ ! -f "out/file" ]; then exit 1; fi
@@ -161,7 +161,7 @@ if [ ! -e "out/link" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -RH in/dir in/file in/link out"
-../bin/cp.js -RH in/file in/link in/dir out
+../bin/cp.mjs -RH in/file in/link in/dir out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/dir"
 if [ ! -d "out/dir" ]; then exit 1; fi
@@ -187,7 +187,7 @@ if [ ! -f "out/dir/sublink/subsubfile" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -RL in/file in/link out"
-../bin/cp.js -RL in/file in/link in/dir out
+../bin/cp.mjs -RL in/file in/link in/dir out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/file"
 if [ ! -f "out/file" ]; then exit 1; fi
@@ -204,7 +204,7 @@ if [ ! -f "out/link" ]; then exit 1; fi
 rm -r out
 
 echo "cp -R in/dir/ out"
-../bin/cp.js -R in/dir/ out
+../bin/cp.mjs -R in/dir/ out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/subdir"
 if [ ! -d "out/subdir" ]; then exit 1; fi
@@ -222,7 +222,7 @@ if [ ! -f "out/sublink/subsubfile" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -p in/file out"
-../bin/cp.js -p in/file out
+../bin/cp.mjs -p in/file out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/file"
 if [ ! -f "out/file" ]; then exit 1; fi
@@ -235,7 +235,7 @@ if [ "$date" != "2022-12-24" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -r -c in/dir '**/*' out"
-../bin/cp.js -r -c in/dir '**/*' out
+../bin/cp.mjs -r -c in/dir '**/*' out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/subdir"
 if [ ! -d "out/subdir" ]; then exit 1; fi
@@ -247,7 +247,7 @@ if [ ! -L "out/sublink" ]; then exit 1; fi
 rm -r out/*
 
 echo "cp -rLv -c in/dir '**/*' out"
-../bin/cp.js -rLv -c in/dir '**/*' out
+../bin/cp.mjs -rLv -c in/dir '**/*' out
 if [ "$?" != "0" ]; then exit 1; fi
 echo "checking out/subdir"
 if [ ! -d "out/subdir" ]; then exit 1; fi

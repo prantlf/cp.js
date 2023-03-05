@@ -27,7 +27,7 @@
   },
   "type": "module",
   "bin": {
-    "cp.js": "bin/cp.js"
+    "cp.js": "bin/cp.mjs"
   },
   "files": [
     "bin"
