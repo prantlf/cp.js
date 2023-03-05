@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/prantlf/cp.js/compare/v2.0.0...v2.0.1) (2023-03-05)
+
+
+### Bug Fixes
+
+* Use .mjs extension to enforce the module type ([b94abda](https://github.com/prantlf/cp.js/commit/b94abdaa6cf86ef082da058c1f27949e44d0b3a5))
+
 # [2.0.0](https://github.com/prantlf/cp.js/compare/v1.0.0...v2.0.0) (2023-01-29)
 
 

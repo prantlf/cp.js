@@ -1,7 +1,7 @@
 {
   "name": "@unixcompat/cp.js",
   "description": "Copies files or directories like the \"cp\" command.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/prantlf/cp.js#readme",
   "author": {
     "name": "Ferdinand Prantl",
