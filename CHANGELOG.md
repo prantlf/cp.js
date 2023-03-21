@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/prantlf/cp.js/compare/v2.0.1...v3.0.0) (2023-03-21)
+
+
+### Bug Fixes
+
+* Rename the bin script to cp-j ([c3ba24d](https://github.com/prantlf/cp.js/commit/c3ba24da2904e4615c35952f7f77c29bace99ea1))
+
+
+### BREAKING CHANGES
+
+* The name of the executable changed from "cp.js" to "cp-j". I'm sorry
+for that, but Windows mistake the suffix ".js" to a file extension and try execute it.
+NPM creates the original file name too, probably to support Cygwin.
+
 ## [2.0.1](https://github.com/prantlf/cp.js/compare/v2.0.0...v2.0.1) (2023-03-05)
 
 
