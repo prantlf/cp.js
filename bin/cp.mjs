@@ -13,7 +13,7 @@ function getPackage() {
 function help() {
   console.log(`${getPackage().description}
 
-Usage: cp.js [-DfHLnPpRrv] [--] src... dest
+Usage: cp-j [-DfHLnPpRrv] [--] src... dest
 
 Options:
   -c|--cwd <dir>              directory to start looking for the source files
@@ -33,9 +33,9 @@ Options:
   -h|--help                   print usage instructions
 
 Examples:
-  $ cp.js prog.js prog.bak
-  $ cp.js jones smith /home/nick/clients
-  $ cp.js -R /home/nick/clients/ /home/nick/customers`)
+  $ cp-j prog.js prog.bak
+  $ cp-j jones smith /home/nick/clients
+  $ cp-j -R /home/nick/clients/ /home/nick/customers`)
 }
 
 const { argv } = process
